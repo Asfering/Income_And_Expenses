@@ -3,11 +3,11 @@
     package="com.example.incomeandexpenses">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IncomeAndExpenses">
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".Registration"
+            android:exported="false" />
         <activity
             android:name=".QRCodeScanner"
             android:exported="false" />

@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_qrcode_scanner.xml" value="0.25833333333333336" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_registration.xml" value="0.2" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19166666666666668" />
       </map>
     </option>
   </component>

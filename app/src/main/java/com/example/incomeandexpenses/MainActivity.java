@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     Button btn2;
     Button btnQRCode;
+    Button regbtn;
+    Button logBtn;
+    QRcodeReader qRcodeReader = new QRcodeReader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,56 +31,66 @@ public class MainActivity extends AppCompatActivity {
         btn2 = (Button) findViewById(R.id.btn2);
         btnQRCode = (Button) findViewById(R.id.qrCodeBtn);
         txtView = (EditText) findViewById(R.id.editTextNumber);
+        regbtn = (Button) findViewById(R.id.registerAcc);
+        logBtn = (Button) findViewById(R.id.LogAcc);
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    QRcodeReader qRcodeReader = new QRcodeReader();
-                    qRcodeReader.RegNumber();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    RegNumber(qRcodeReader);
+            }
+        });
+
+        logBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowLogin();
             }
         });
 
         btnQRCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    showQrCode();
+                ShowQrCode();
+            }
+        });
+
+        regbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               ShowRegistration();
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    QRcodeReader qRcodeReader = new QRcodeReader();
-                    qRcodeReader.SmsCode(txtView.getText().toString(), new QRcodeReader.ResultHandler() {
-                        @Override
-                        public void onSuccess(JsonReaderSessionID response) {
-                            //qRcodeReader.sessionId = response.getSessionId();
-                           // qRcodeReader.sessionId =
-                        }
-
-                        @Override
-                        public void onSuccess(String response) {
-
-                        }
-
-                        @Override
-                        public void onFail(IOException error) {
-
-                        }
-                    });
+                    SmsCode(qRcodeReader);
                     qRcodeReader.GetTicket("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         });
     }
-    private void showQrCode(){
+
+    private void SmsCode(QRcodeReader qRcodeReader){
+        qRcodeReader.SmsCode(txtView.getText().toString());
+    }
+
+    private void RegNumber(QRcodeReader qRcodeReader){
+        qRcodeReader.RegNumber();
+    }
+
+    private void ShowRegistration(){
+        Intent intent = new Intent(this, Registration.class);
+        startActivity(intent);
+    }
+
+    private void ShowLogin(){
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
+    private void ShowQrCode(){
         Intent intent = new Intent(this, QRCodeScanner.class);
         startActivity(intent);
     }

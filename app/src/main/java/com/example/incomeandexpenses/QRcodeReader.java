@@ -29,14 +29,13 @@ public class QRcodeReader {
 
     private final OkHttpClient httpClient = new OkHttpClient();
 
-    public QRcodeReader() throws Exception {
+    public QRcodeReader(){
         this.sessionId = null;
-        RegNumber();
     }
 
 
     // Регаем номер
-    public void RegNumber() throws Exception {
+    public void RegNumber(){
         PhoneJson phoneJson = new PhoneJson("+79097261795", "IyvrAbKt9h/8p6a7QPh8gpkXYQ4=", "Android");
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(phoneJson);
@@ -79,15 +78,8 @@ public class QRcodeReader {
 
     }
 
-    public interface ResultHandler {
-        void onSuccess(JsonReaderSessionID response);
 
-        void onSuccess(String response);
-
-        void onFail(IOException error);
-    }
-
-    public void SmsCode(String Code, ResultHandler callback){
+    public void SmsCode(String Code){
         SmsJson smsJson = new SmsJson("+79097261795", "IyvrAbKt9h/8p6a7QPh8gpkXYQ4=", "Android", Code);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(smsJson);
@@ -109,16 +101,14 @@ public class QRcodeReader {
 
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try (Response responseBody = httpClient.newCall(request).execute()) {
 
                     if (!responseBody.isSuccessful())
                         throw new IOException("Unexpected code " + responseBody);
 
-                    //JsonReaderSessionID jsonReaderSessionID = gson.fromJson(String.valueOf(response.body()), JsonReaderSessionID.class);
-                    //callback.onSuccess(jsonReaderSessionID);
-                    //String res = response.body().string();
-                    //callback.onSuccess(res);
+                    SetSessionId(Objects.requireNonNull(responseBody.body()).string());
+
                     System.out.println(Objects.requireNonNull(responseBody.body()).string());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -130,6 +120,10 @@ public class QRcodeReader {
                 e.printStackTrace();
             }
         });
+    }
+
+    void SetSessionId(String sessionId){
+        this.sessionId = sessionId;
     }
 
     public String GetTicketID(String QR){
@@ -184,6 +178,7 @@ public class QRcodeReader {
                 .addHeader("clientVersion", CLIENT_VERSION)
                 .addHeader("Accept-Language", ACCEPT_LANGUAGE)
                 .addHeader("User-Agent", USER_AGENT)
+                .addHeader("sessionId", sessionId)
                 .build();
         httpClient.newCall(request).enqueue(new Callback() {
             @Override

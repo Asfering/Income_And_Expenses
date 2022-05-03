@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/txtPassLog"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Пароль"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/txtPhoneLog"
+        app:layout_constraintTop_toTopOf="@+id/etxtPassLog" />
+
+    <EditText
+        android:id="@+id/etxtPassLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/etxtPhoneLog"
+        app:layout_constraintTop_toBottomOf="@+id/etxtPhoneLog" />
+
+    <EditText
+        android:id="@+id/etxtPhoneLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="190dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/txtPhoneLog"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPhoneLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="200dp"
+        android:text="Телефон (+7)"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLog"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Войти"
+        app:layout_constraintEnd_toEndOf="@+id/etxtPassLog"
+        app:layout_constraintStart_toStartOf="@+id/txtPassLog"
+        app:layout_constraintTop_toBottomOf="@+id/etxtPassLog" />
+</androidx.constraintlayout.widget.ConstraintLayout>
