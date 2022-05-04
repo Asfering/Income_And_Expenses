@@ -1,14 +1,15 @@
 package com.example.incomeandexpenses;
 
-public class Users {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Users implements Serializable {
     private int IdUser;
     private String PhoneNumber;
     private String Password;
     private String Name;
 
-    public Users(){
-
-    }
 
     public Users (int IdUser, String PhoneNumber, String Password, String Name){
         this.IdUser = IdUser;
@@ -34,18 +35,18 @@ public class Users {
     }
 
     public void setIdUser(int idUser) {
-        IdUser = idUser;
+        this.IdUser = idUser;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.Name = name;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.Password = password;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+        this.PhoneNumber = phoneNumber;
     }
 }

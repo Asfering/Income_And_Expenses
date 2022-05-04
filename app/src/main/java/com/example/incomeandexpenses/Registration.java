@@ -3,6 +3,7 @@ package com.example.incomeandexpenses;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -49,10 +50,6 @@ public class Registration extends AppCompatActivity {
         });
     }
 
-    void DataInCorrect(){
-        Toast.makeText(this, "Данные введены неверно", Toast.LENGTH_SHORT).show();
-    }
-
     void Register(String name, String phone, String password, SQLiteDatabase database){
         ContentValues contentValues = new ContentValues();
         Cursor cursor;
@@ -65,12 +62,21 @@ public class Registration extends AppCompatActivity {
             contentValues.put("Password", password);
             contentValues.put("Name", name);
             database.insert("users", null, contentValues);
+            GotoLogin();
         } else {
             MakeText();
         }
         cursor.close();
 
-        // переход на главную.
+    }
+
+    void GotoLogin(){
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
+    void DataInCorrect(){
+        Toast.makeText(this, "Данные введены неверно", Toast.LENGTH_SHORT).show();
     }
 
     void MakeText(){

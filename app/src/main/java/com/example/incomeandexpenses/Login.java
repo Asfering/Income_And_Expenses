@@ -3,6 +3,7 @@ package com.example.incomeandexpenses;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 public class Login extends AppCompatActivity {
 
     Button btnLog;
+    Button btnLogReg;
     Users user;
 
     @Override
@@ -23,11 +27,19 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         btnLog = (Button) findViewById(R.id.btnLog);
+        btnLogReg = (Button) findViewById(R.id.btnLogReg);
         TextView phoneView = findViewById(R.id.etxtPhoneLog);
         TextView passwordView = findViewById(R.id.etxtPassLog);
 
         MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(this);
         SQLiteDatabase database = myDataBaseHelper.getWritableDatabase();
+
+        btnLogReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RedirectToRegister();
+            }
+        });
 
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +61,7 @@ public class Login extends AppCompatActivity {
                                 cursor.getString(cursor.getColumnIndexOrThrow("PhoneNumber")),
                                 cursor.getString(cursor.getColumnIndexOrThrow("Password")),
                                 cursor.getString(cursor.getColumnIndexOrThrow("Name")));
-                        // переход на главную
+                        GotoBasic(user);
                     } else {
                         DataInCorrect();
                     }
@@ -61,6 +73,17 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    void RedirectToRegister(){
+        Intent intent = new Intent(this, Registration.class);
+        startActivity(intent);
+    }
+
+    void GotoBasic(Users user){
+        Intent intent = new Intent(this, Basic.class);
+        intent.putExtra(Users.class.getSimpleName(), user);
+        startActivity(intent);
     }
 
     void DataInCorrect(){

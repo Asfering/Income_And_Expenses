@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         android:text="Пароль"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/txtPhoneLog"
+        app:layout_constraintStart_toStartOf="@+id/btnLog"
         app:layout_constraintTop_toTopOf="@+id/etxtPassLog" />
 
     <EditText
@@ -23,6 +23,7 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/btnLog"
         app:layout_constraintStart_toStartOf="@+id/etxtPhoneLog"
         app:layout_constraintTop_toBottomOf="@+id/etxtPhoneLog" />
 
@@ -31,10 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="220dp"
         android:ems="10"
         android:inputType="phone"
         android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/btnLog"
         app:layout_constraintStart_toEndOf="@+id/txtPhoneLog"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,12 +44,11 @@
         android:id="@+id/txtPhoneLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="10dp"
         android:text="Телефон (+7)"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/btnLog"
+        app:layout_constraintTop_toTopOf="@+id/etxtPhoneLog" />
 
     <Button
         android:id="@+id/btnLog"
@@ -55,7 +56,17 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:text="Войти"
-        app:layout_constraintEnd_toEndOf="@+id/etxtPassLog"
-        app:layout_constraintStart_toStartOf="@+id/txtPassLog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etxtPassLog" />
+
+    <Button
+        android:id="@+id/btnLogReg"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="Регистрация"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLog" />
 </androidx.constraintlayout.widget.ConstraintLayout>

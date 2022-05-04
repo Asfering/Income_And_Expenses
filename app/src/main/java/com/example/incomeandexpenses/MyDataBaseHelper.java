@@ -21,21 +21,21 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        String createUserTable = "CREATE TABLE Users (" +
+        String createUserTable = "CREATE TABLE IF NOT EXISTS Users (" +
                 "IdUser INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL," +
                 "PhoneNumber TEXT UNIQUE NOT NULL," +
                 "Password TEXT NOT NULL," +
                 "Name TEXT NOT NULL);";
         sqLiteDatabase.execSQL(createUserTable);
 
-        String createReceiptsTable = "CREATE TABLE Receipts (" +
+        String createReceiptsTable = "CREATE TABLE IF NOT EXISTS Receipts (" +
                 "IdReceipt INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                 "IdUser INTEGER REFERENCES Users (IdUser) NOT NULL," +
                 "TimeStamp DATETIME," +
                 "QRCode TEXT);";
         sqLiteDatabase.execSQL(createReceiptsTable);
 
-        String createItemTable = "CREATE TABLE Items (" +
+        String createItemTable = "CREATE TABLE IF NOT EXISTS Items  (" +
                 "IdItem INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL," +
                 "IdReceipt INTEGER REFERENCES Receipts (IdReceipt) NOT NULL," +
                 "Name TEXT NOT NULL," +
@@ -48,12 +48,25 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 "Category TEXT DEFAULT 'БезКатегории');";
         sqLiteDatabase.execSQL(createItemTable);
 
+        String createIncomesTable = "CREATE TABLE IF NOT EXISTS Incomes (" +
+                "IdIncome INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
+                "IdUser INTEGER REFERENCES Users (IdUser) NOT NULL," +
+                "TimeStamp DATETIME," +
+                "Sum INTEGER NOT NULL," +
+                "Category TEXT DEFAULT 'БезКатегории')";
+        sqLiteDatabase.execSQL(createIncomesTable);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+   // public void dropReceipts(SQLiteDatabase sqLiteDatabase){
+     //   sqLiteDatabase.execSQL("DROP TABLE IF EXISTS RECEIPTS");
+    //    onCreate(sqLiteDatabase);
+    //}
 
     // Вывод значений
     void logCursor(Cursor cursor) {

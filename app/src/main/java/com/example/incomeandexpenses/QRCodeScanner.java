@@ -22,7 +22,7 @@ public class QRCodeScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_scanner);
 
-        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        CodeScannerView scannerView = findViewById(R.id.scanner_view_Scan);
         codeScanner = new CodeScanner(this, scannerView);
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -32,7 +32,7 @@ public class QRCodeScanner extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(QRCodeScanner.this, result.getText(), Toast.LENGTH_SHORT).show();
                         System.out.println(result.getText().toString());
-                        tv=findViewById(R.id.textView);
+                        tv=findViewById(R.id.textViewScan);
                         tv.setText(result.getText().toString());
                     }
                 });
