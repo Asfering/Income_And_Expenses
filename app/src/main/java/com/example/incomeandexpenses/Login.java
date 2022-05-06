@@ -21,6 +21,13 @@ public class Login extends AppCompatActivity {
     Button btnLogReg;
     Users user;
 
+    // подумать над выходом из приложения!
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

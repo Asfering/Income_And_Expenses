@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,80 +18,93 @@ public class Basic extends AppCompatActivity {
 
     private final int ID_INSIGHTS = 1;
     private final int ID_ADD = 2;
-    private final int ID_PROFILE = 3;
+    private final int ID_SETTINGS = 3;
+    private Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic);
 
-        //TextView selected_page = findViewById(R.id.selected_page);
-        MeowBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigation);
+        try {
+            MeowBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigation);
 
-        bottomNavigation.add(new MeowBottomNavigation.Model(ID_INSIGHTS,R.drawable.ic_baseline_insights_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(ID_ADD,R.drawable.ic_baseline_add_circle_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(ID_PROFILE,R.drawable.ic_baseline_person_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(ID_INSIGHTS, R.drawable.ic_baseline_insights_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(ID_ADD, R.drawable.ic_baseline_add_circle_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(ID_SETTINGS, R.drawable.ic_baseline_settings_24));
 
-        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
-            @Override
-            public void onClickItem(MeowBottomNavigation.Model item) {
-                MakeText(item);
-           }
-        });
-
-        Bundle arguments = getIntent().getExtras();
-        Users user = (Users) arguments.getSerializable(Users.class.getSimpleName());
-
-        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
-            @Override
-            public void onShowItem(MeowBottomNavigation.Model item) {
-
-                Fragment fragment = null;
-
-                String name;
-                switch (item.getId()){
-
-                    case ID_INSIGHTS: name = "INSIGHTS";
-                        fragment = new InsightsFragment();
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragment_container_view_tag, fragment);
-                        ft.commit();
-                    break;
-
-                    case ID_ADD: name="ADD";
-                        fragment = new AddFragment();
-                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                        ft2.replace(R.id.fragment_container_view_tag, fragment);
-                        ft2.commit();
-                    break;
-
-                    case ID_PROFILE: name = "PROFILE";
-                        fragment = new ProfileFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Users.class.getSimpleName(), user);
-                        fragment.setArguments(bundle);
-                        FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
-                        ft3.replace(R.id.fragment_container_view_tag, fragment);
-                        ft3.commit();
-                    break;
-
-                    default: name="";
-
-
-
-                        //FragmentManager fn = new getSupportFragmentManager();
-                        //FragmentTransaction ft = fn.beginTransaction();
-                        //ft.replace(R.id.fragment_container_view_tag, fragment);
-                        //ft.commit();
-
+            bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+                @Override
+                public void onClickItem(MeowBottomNavigation.Model item) {
+                    //MakeText(item);
                 }
-                //selected_page.setText(getString(R.string.main_page_selected, name));
-            }
-        });
+            });
 
-        bottomNavigation.show(ID_INSIGHTS, false);
+           GetUser();
+
+           bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+               @Override
+               public void onReselectItem(MeowBottomNavigation.Model item) {
+                   SelectItem(item);
+               }
+           });
+
+            bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+                @Override
+                public void onShowItem(MeowBottomNavigation.Model item) {
+                    SelectItem(item);
+                }
+            });
+
+            bottomNavigation.show(ID_INSIGHTS, false);
+        }catch (Exception e){
+            Log.d("TAG", "error " + e);
+        }
 
 
+    }
+
+    void SelectFragment(Fragment newFragment){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container_view_tag, newFragment).addToBackStack("");
+        ft.commit();
+    }
+
+    void SelectItem(MeowBottomNavigation.Model item){
+        Fragment fragment = null;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Users.class.getSimpleName(), user);
+
+        switch (item.getId()) {
+            case ID_INSIGHTS:
+                fragment = new InsightsFragment();
+                fragment.setArguments(bundle);
+                SelectFragment(fragment);
+                break;
+
+            case ID_ADD:
+
+                fragment = new AddFragment();
+                fragment.setArguments(bundle);
+                SelectFragment(fragment);
+                break;
+
+            case ID_SETTINGS:
+                fragment = new SettingsFragment();
+                fragment.setArguments(bundle);
+                SelectFragment(fragment);
+                break;
+                //FragmentManager fn = new getSupportFragmentManager();
+                //FragmentTransaction ft = fn.beginTransaction();
+                //ft.replace(R.id.fragment_container_view_tag, fragment);
+                //ft.commit();
+
+        }
+    }
+
+    void GetUser(){
+        Bundle arguments = getIntent().getExtras();
+        user = (Users) arguments.getSerializable(Users.class.getSimpleName());
     }
 
     void MakeText(MeowBottomNavigation.Model item){
