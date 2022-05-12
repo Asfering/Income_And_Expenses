@@ -83,7 +83,6 @@ public class Basic extends AppCompatActivity {
                 break;
 
             case ID_ADD:
-
                 fragment = new AddFragment();
                 fragment.setArguments(bundle);
                 SelectFragment(fragment);

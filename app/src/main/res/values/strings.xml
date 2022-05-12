@@ -15,4 +15,36 @@
     <string name="title_activity_tempest">tempest</string>
     <string name="title_activity_checkingactivity">checkingactivity</string>
     <string name="title_activity_change_password">ChangePassword</string>
+
+    <string-array name="ExpensesCategory">
+        <item>Продукты</item>
+        <item>Общественный транспорт</item>
+        <item>Связь и интернет</item>
+        <item>Косметика и уход</item>
+        <item>Рестораны и кафе</item>
+        <item>Лекарства</item>
+        <item>Быт</item>
+        <item>Квитанции</item>
+        <item>Хобби</item>
+        <item>Одежда</item>
+        <item>Строительные работы</item>
+        <item>Личный транспорт</item>
+        <item>Канцелярия</item>
+        <item>Напитки</item>
+        <item>Развлечения</item>
+        <item>Подарки</item>
+        <item>Прочее</item>
+        <item>БезКатегории</item>
+
+    </string-array>
+
+    <string-array name="IncomesCategory">
+        <item>Зарплата</item>
+        <item>Инвестиции</item>
+        <item>Иждивение</item>
+        <item>Гос. пособия</item>
+        <item>Подарки</item>
+        <item>Кэшбэк на покупки</item>
+
+    </string-array>
 </resources>

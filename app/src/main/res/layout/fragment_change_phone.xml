@@ -39,7 +39,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="310dp"
         android:ems="10"
-        android:hint="Новыф номер"
+        android:hint="Новый номер"
         android:inputType="number"
         android:text="" />
 
@@ -52,7 +52,6 @@
         android:layout_marginTop="360dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
         android:hint="Пароль"
         android:inputType="textPassword" />
 

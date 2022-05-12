@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnQRCode;
     Button regbtn;
     Button logBtn;
-    QRcodeReader qRcodeReader = new QRcodeReader();
+    NalogAPIReader nalogAPIReader = new NalogAPIReader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    RegNumber(qRcodeReader);
+                    RegNumber(nalogAPIReader);
             }
         });
 
@@ -66,18 +63,22 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    SmsCode(qRcodeReader);
-                    qRcodeReader.GetTicket("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1");
+                SmsCode(nalogAPIReader);
             }
         });
     }
 
-    private void SmsCode(QRcodeReader qRcodeReader){
-        qRcodeReader.SmsCode(txtView.getText().toString());
+    private void SmsCode(NalogAPIReader nalogAPIReader){
+        nalogAPIReader.smsCode(txtView.getText().toString(), new NalogAPIReader.CallBack() {
+            @Override
+            public void onSmsSend(String sessionId) {
+                nalogAPIReader.getTicket("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1", sessionId);
+            }
+        });
     }
 
-    private void RegNumber(QRcodeReader qRcodeReader){
-        qRcodeReader.RegNumber();
+    private void RegNumber(NalogAPIReader nalogAPIReader){
+        nalogAPIReader.regNumber("+79097261795");
     }
 
     private void ShowRegistration(){

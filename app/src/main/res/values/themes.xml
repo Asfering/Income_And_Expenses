@@ -19,6 +19,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="BasicBackground">
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
     <style name="Theme.IncomeAndExpenses.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.IncomeAndExpenses.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -11,11 +11,11 @@ public class Users implements Serializable {
     private String Name;
 
 
-    public Users (int IdUser, String PhoneNumber, String Password, String Name){
-        this.IdUser = IdUser;
-        this.PhoneNumber = PhoneNumber;
-        this.Password = Password;
-        this.Name = Name;
+    public Users (int idUser, String phoneNumber, String password, String name){
+        this.IdUser = idUser;
+        this.PhoneNumber = phoneNumber;
+        this.Password = password;
+        this.Name = name;
     }
 
     public int getIdUser() {

@@ -28,34 +28,28 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 "Name TEXT NOT NULL);";
         sqLiteDatabase.execSQL(createUserTable);
 
-        String createReceiptsTable = "CREATE TABLE IF NOT EXISTS Receipts (" +
-                "IdReceipt INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
+        String createOperationsTable = "CREATE TABLE IF NOT EXISTS Operations (" +
+                "IdOperation INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
                 "IdUser INTEGER REFERENCES Users (IdUser) NOT NULL," +
-                "TimeStamp DATETIME," +
-                "QRCode TEXT);";
-        sqLiteDatabase.execSQL(createReceiptsTable);
+                "Name TEXT NOT NULL," +
+                "TypeOperation BOOLEAN NOT NULL,"+
+                "TimeStamp DATETIME NOT NULL," +
+                "Sum REAL NOT NULL," +
+                "Category TEXT NOT NULL);";
+        sqLiteDatabase.execSQL(createOperationsTable);
 
         String createItemTable = "CREATE TABLE IF NOT EXISTS Items  (" +
                 "IdItem INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL," +
-                "IdReceipt INTEGER REFERENCES Receipts (IdReceipt) NOT NULL," +
+                "IdOperations INTEGER REFERENCES Operations (IdOperation) NOT NULL," +
                 "Name TEXT NOT NULL," +
                 "Nds INTEGER," +
-                "NdsSum INTEGER," +
+                "NdsSum REAL," +
                 "PaymentType INTEGER," +
-                "Price INTEGER," +
-                "Quantity INTEGER NOT NULL," +
-                "Sum INTEGER NOT NULL," +
+                "Price REAL," +
+                "Quantity REAL NOT NULL," +
+                "Sum REAL NOT NULL," +
                 "Category TEXT DEFAULT 'БезКатегории');";
         sqLiteDatabase.execSQL(createItemTable);
-
-        String createIncomesTable = "CREATE TABLE IF NOT EXISTS Incomes (" +
-                "IdIncome INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," +
-                "IdUser INTEGER REFERENCES Users (IdUser) NOT NULL," +
-                "TimeStamp DATETIME," +
-                "Sum INTEGER NOT NULL," +
-                "Category TEXT DEFAULT 'БезКатегории')";
-        sqLiteDatabase.execSQL(createIncomesTable);
-
     }
 
     @Override
@@ -63,10 +57,11 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-   // public void dropReceipts(SQLiteDatabase sqLiteDatabase){
-     //   sqLiteDatabase.execSQL("DROP TABLE IF EXISTS RECEIPTS");
-    //    onCreate(sqLiteDatabase);
-    //}
+    /*public void dropReceipts(SQLiteDatabase sqLiteDatabase){
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS operations");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Items");
+        onCreate(sqLiteDatabase);
+    }*/
 
     // Вывод значений
     void logCursor(Cursor cursor) {
