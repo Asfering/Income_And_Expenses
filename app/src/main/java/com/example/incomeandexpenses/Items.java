@@ -34,6 +34,14 @@ public class Items {
         this.Category = category;
     }
 
+    public Items(int idItem, int idOperation, String name, float quantity, float sum){
+        this.IdItem = idItem;
+        this.IdOperation = idOperation;
+        this.Name = name;
+        this.Quantity = quantity;
+        this.Sum = sum;
+    }
+
     public int getIdOperation() {
         return IdOperation;
     }

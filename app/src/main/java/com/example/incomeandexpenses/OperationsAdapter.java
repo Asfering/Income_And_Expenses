@@ -34,10 +34,9 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         return new ViewHolder(view);
     }
 
-    private String GetMonth(int position){
-        Operations operation = operations.get(position);
+    private String getMonth(Calendar calendar){
         String tempReturn = "";
-        int month = Integer.parseInt (String.valueOf(operation.getTimeStamp().get(Calendar.MONTH)));
+        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.MONTH)));
         if(month < 9){
             month++;
             tempReturn="0" + String.valueOf(month);
@@ -47,14 +46,27 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         return tempReturn;
     }
 
+    private String getDay(Calendar calendar){
+        String tempReturn = "";
+        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        if(month < 10) {
+        tempReturn="0" + month;
+        }
+        return tempReturn;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Operations operation = operations.get(position);
         holder.nameOperation.setText(String.valueOf(operation.getName()));
         holder.categoryOperation.setText(operation.getCategory());
-        date = operation.getTimeStamp().getTime();
+        date = operation.getTimeStamp();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
 
-        String tempTime = operation.getTimeStamp().get(Calendar.DAY_OF_MONTH) + "." + GetMonth(position) + "." +  operation.getTimeStamp().get(Calendar.YEAR);
+        String tempTime = getDay(calendar) + "."+ getMonth(calendar) +"." +calendar.get(Calendar.YEAR);
+
+        //String tempTime = operation.getTimeStamp().get(Calendar.DAY_OF_MONTH) + "." + GetMonth(position) + "." +  operation.getTimeStamp().get(Calendar.YEAR);
 
         holder.timestampOperation.setText(tempTime);
         if (operation.getTypeOperation()){

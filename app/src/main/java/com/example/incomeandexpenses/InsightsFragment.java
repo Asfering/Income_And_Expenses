@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import java.security.Timestamp;
 import org.threeten.bp.LocalDateTime;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -41,9 +43,9 @@ public class InsightsFragment extends Fragment {
     }
 
     private void initializeData(){
-        Calendar calendar = new GregorianCalendar(2017, 0 , 25);
-        operations.add(new Operations(1,3,"Работа в кафе", true, calendar, 300, "Зарплата"));
-        operations.add(new Operations(2,3,"Пятерочка", false, calendar, 100, "Магазины"));
+        Date sqlDate1 = Date.valueOf("2022-04-09");
+        operations.add(new Operations(1,3,"Работа в кафе", true, sqlDate1, 300, "Зарплата"));
+        operations.add(new Operations(2,3,"Пятерочка", false, sqlDate1, 100, "Магазины"));
     }
 
     private void GetUser(){

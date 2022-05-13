@@ -3,17 +3,18 @@ package com.example.incomeandexpenses;
 import org.threeten.bp.LocalDateTime;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Operations {
     private int IdOperation;
     private int IdUser;
     private String Name;
     private boolean TypeOperation;
-    private Calendar TimeStamp;
+    private Date TimeStamp;
     private float Sum;
     private String Category;
 
-    public Operations(int idOperation, int idUser, String name, boolean typeOperation, Calendar timeStamp, float sum, String category){
+    public Operations(int idOperation, int idUser, String name, boolean typeOperation, Date timeStamp, float sum, String category){
         this.IdOperation = idOperation;
         this.IdUser = idUser;
         this.Name = name;
@@ -27,7 +28,7 @@ public class Operations {
         return IdUser;
     }
 
-    public Calendar getTimeStamp() {
+    public Date getTimeStamp() {
         return TimeStamp;
     }
 
@@ -59,7 +60,7 @@ public class Operations {
         Name = name;
     }
 
-    public void setTimeStamp(Calendar timeStamp) {
+    public void setTimeStamp(Date timeStamp) {
         TimeStamp = timeStamp;
     }
 
