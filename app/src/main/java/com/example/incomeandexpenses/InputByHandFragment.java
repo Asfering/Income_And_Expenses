@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -35,16 +36,39 @@ import java.sql.Date;
 
 public class InputByHandFragment extends Fragment {
 
+    // Классы
     Users user;
     Operations operations;
+
+    // Таблица
     TableLayout tableLayout;
     TableRow tableRowZero;
+
+    // Вьюха
     View RootView;
+
+    // Переменные
     int counterRows;
-    int finalSum;
+    float finalSum;
+    boolean TypeOperation;
+
+
+    // БД
     MyDataBaseHelper myDataBaseHelper;
     SQLiteDatabase database;
-    boolean TypeOperation;
+
+    // Элементы формы
+    EditText nameOfOperation;
+    EditText day;
+    EditText month;
+    EditText year;
+    EditText sum;
+    RadioButton rbIncome;
+    RadioButton rbExpenses;
+    Spinner spinner;
+    Button addRowToTable;
+    Button sumTables;
+    Button addItemToDataBase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,17 +77,17 @@ public class InputByHandFragment extends Fragment {
 
         GetUser();
         TypeOperation = false;
-        EditText nameOfOperation = RootView.findViewById(R.id.nameOfOperation);     // Имя операции
-        EditText day = RootView.findViewById(R.id.day);                             // День
-        EditText month = RootView.findViewById(R.id.month);                         // Месяц
-        EditText year = RootView.findViewById(R.id.year);                           // Год
-        EditText sum = RootView.findViewById(R.id.finalSum);                        // Итоговая сумма
-        RadioButton rbIncome = RootView.findViewById(R.id.radioIncome);             // Кнопка "Доходы"
-        RadioButton rbExpenses = RootView.findViewById(R.id.radioExpenses);         // Кнопка "Расходы"
-        Spinner spinner = RootView.findViewById(R.id.spinner);                      // Выпадающий список с категориями
-        Button addRowToTable = RootView.findViewById(R.id.addRowToTable);           // Добавить строку в таблицу
-        Button addItemToDataBase = RootView.findViewById(R.id.addItemToDataBase);   // Добавить операцию в БД.
-        Button sumTables = RootView.findViewById(R.id.SumTables);                   // Кнопка для подсчёта суммы в item's ниже. Надо сделать обработчик исключений, если Item нет!
+        nameOfOperation = RootView.findViewById(R.id.nameOfOperation);     // Имя операции
+        day = RootView.findViewById(R.id.day);                             // День
+        month = RootView.findViewById(R.id.month);                         // Месяц
+        year = RootView.findViewById(R.id.year);                           // Год
+        sum = RootView.findViewById(R.id.finalSum);                        // Итоговая сумма
+        rbIncome = RootView.findViewById(R.id.radioIncome);             // Кнопка "Доходы"
+        rbExpenses = RootView.findViewById(R.id.radioExpenses);         // Кнопка "Расходы"
+        spinner = RootView.findViewById(R.id.spinner);                      // Выпадающий список с категориями
+        addRowToTable = RootView.findViewById(R.id.addRowToTable);           // Добавить строку в таблицу
+        addItemToDataBase = RootView.findViewById(R.id.addItemToDataBase);   // Добавить операцию в БД.
+        sumTables = RootView.findViewById(R.id.SumTables);                   // Кнопка для подсчёта суммы в item's ниже. Надо сделать обработчик исключений, если Item нет!
 
         // База данных
         myDataBaseHelper= new MyDataBaseHelper(RootView.getContext());
@@ -74,14 +98,7 @@ public class InputByHandFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(rbIncome.isChecked()){
-                    // Настраиваем адаптер
-                    ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.IncomesCategory,
-                            android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    TypeOperation = true;
-
-                    // Вызываем адаптер
-                    spinner.setAdapter(adapter);
+                    adapterRadioButton(true);
                 }
             }
         });
@@ -91,12 +108,7 @@ public class InputByHandFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(rbExpenses.isChecked()){
-                    ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.ExpensesCategory,
-                            android.R.layout.simple_spinner_item);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    TypeOperation = false;
-                    // Вызываем адаптер
-                    spinner.setAdapter(adapter);
+                    adapterRadioButton(false);
                 }
             }
         });
@@ -121,27 +133,7 @@ public class InputByHandFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    if (checkDate(day, month, year))        // Проверяем дату
-                    {
-                        String time = year.getText().toString() + "-" + month.getText().toString() + "-" + day.getText().toString();        // Передаем дату в стринг
-                        Date date = Date.valueOf(time);     // Передаем стринг в дату
-                        String category = spinner.getSelectedItem().toString();         // выделяем категорию
-                        // Добавляем операцию в БД
-                        addOperationsToDB(nameOfOperation.getText().toString(), TypeOperation, date, Float.parseFloat(sum.getText().toString()), category);
-                        // Если таблица заполнена хотя бы 1 строкой
-                        if (counterRows > 1) {
-                            for (int i = 1; i < counterRows; i++) {
-                                // Берем строку
-                                TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
-                                // Добавляем строку в БД.
-                                addItemsToDB(tbRow);
-                            }
-                        }
-                        allFine();
-                    } else {
-                        dateInCorrect();
-                    }
-
+                    addItemsToDB();
                 }
                 catch (Exception e) {
                     errorInputDatabase();
@@ -154,17 +146,7 @@ public class InputByHandFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    if (counterRows > 1) {
-                        finalSum = 0;
-                        for (int i = 1; i < counterRows; i++) {
-                            TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
-                            EditText editText = (EditText) tbRow.getChildAt(2);         // Берем сумму каждого товара
-                            finalSum += Integer.parseInt(editText.getText().toString());     // Складываем в общую.
-                        }
-                        sum.setText(String.valueOf(finalSum));
-                    } else {
-                        tableNotExist();
-                    }
+                    sumData();
                 }
                 catch (Exception e) {
                     tableInCorrect();
@@ -183,10 +165,7 @@ public class InputByHandFragment extends Fragment {
     }
 
 
-
-
     ///////////////////////// Регион работы с БД
-
 
     // Инсертим данные в таблицу Operations
     private void addOperationsToDB(String name, boolean TypeOperation, Date timestamp, float sum, String category){
@@ -297,6 +276,62 @@ public class InputByHandFragment extends Fragment {
 
     ///////////////////////// Регион вспомогательный
 
+    // Функция для работы с RadioButton и Spinner adapter
+    private void adapterRadioButton(boolean bool){
+        ArrayAdapter<?> adapter = null;
+        TypeOperation=bool;
+        if(TypeOperation){
+
+            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.IncomesCategory,
+                    android.R.layout.simple_spinner_item);
+        }else{
+            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.ExpensesCategory,
+                    android.R.layout.simple_spinner_item);
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Вызываем адаптер
+        spinner.setAdapter(adapter);
+    }
+
+    // Добавляем данные в БД
+    private void addItemsToDB(){
+        if (checkDate(day, month, year))        // Проверяем дату
+        {
+            String time = year.getText().toString() + "-" + month.getText().toString() + "-" + day.getText().toString();        // Передаем дату в стринг
+            Date date = Date.valueOf(time);     // Передаем стринг в дату
+            String category = spinner.getSelectedItem().toString();         // выделяем категорию
+            // Добавляем операцию в БД
+            addOperationsToDB(nameOfOperation.getText().toString(), TypeOperation, date, Float.parseFloat(sum.getText().toString()), category);
+            // Если таблица заполнена хотя бы 1 строкой
+            if (counterRows > 1) {
+                for (int i = 1; i < counterRows; i++) {
+                    // Берем строку
+                    TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
+                    // Добавляем строку в БД.
+                    addItemsToDB(tbRow);
+                }
+            }
+            allFine();
+        } else {
+            dateInCorrect();
+        }
+    }
+
+    // Суммируем суммы элементов таблицы
+    private void sumData(){
+        if (counterRows > 1) {
+            finalSum = 0;
+            for (int i = 1; i < counterRows; i++) {
+                TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
+                EditText editText = (EditText) tbRow.getChildAt(2);         // Берем сумму каждого товара
+                finalSum += Float.parseFloat(editText.getText().toString());     // Складываем в общую.
+            }
+            sum.setText(String.valueOf(finalSum));
+        } else {
+            tableNotExist();
+        }
+    }
+
     // Получаем пользователя
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
@@ -355,8 +390,6 @@ public class InputByHandFragment extends Fragment {
         }catch (Exception e) {
             dateInCorrect();
         }
-
-
         return false;
     }
 

@@ -2,10 +2,11 @@ package com.example.incomeandexpenses;
 
 import org.threeten.bp.LocalDateTime;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Operations {
+public class Operations implements Serializable{
     private int IdOperation;
     private int IdUser;
     private String Name;

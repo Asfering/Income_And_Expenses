@@ -22,7 +22,15 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
     private List<Operations> operations;
     Date date;
 
-    OperationsAdapter(Context context, List<Operations> operations){
+    // Интерфейс для получения нажатого элемента
+    interface OnOperationClickListener{
+        void onOperationClick(Operations operation, int position);
+    }
+
+    private final OnOperationClickListener onClickListener;
+
+    OperationsAdapter(Context context, List<Operations> operations, OnOperationClickListener onOperationClickListener){
+        this.onClickListener = onOperationClickListener;
         this.operations = operations;
         this.inflater = LayoutInflater.from(context);
     }
@@ -40,8 +48,9 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         if(month < 9){
             month++;
             tempReturn="0" + String.valueOf(month);
-        } else if (month > 8 && month < 12) {
-            tempReturn=String.valueOf(month++);
+        } else if (month < 12) {
+            month++;
+            tempReturn=String.valueOf(month);
         }
         return tempReturn;
     }
@@ -52,12 +61,13 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         if(month < 10) {
         tempReturn="0" + month;
         }
+        else tempReturn = String.valueOf(month);
         return tempReturn;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Operations operation = operations.get(position);
+        Operations operation = operations.get(holder.getAdapterPosition());
         holder.nameOperation.setText(String.valueOf(operation.getName()));
         holder.categoryOperation.setText(operation.getCategory());
         date = operation.getTimeStamp();
@@ -79,6 +89,15 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
             holder.sumOperation.setTextColor(Color.parseColor("#ff0000"));
             holder.sumOperation.setText("- " + operation.getSum());
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                // вызываем метод слушателя, передавая ему данные
+                onClickListener.onOperationClick(operation, holder.getAdapterPosition());
+            }
+        });
 
     }
 

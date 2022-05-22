@@ -8,7 +8,7 @@
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_launcher_background.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_basic.xml" value="0.12280701754385964" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_basic.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_change_password.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_checkingactivity.xml" value="0.215625" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_login.xml" value="0.536" />
@@ -21,6 +21,7 @@
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_change_name.xml" value="0.22864583333333333" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_change_pass.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_change_phone.xml" value="0.536" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_changing_data.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_input_by_hand.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_insights.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
