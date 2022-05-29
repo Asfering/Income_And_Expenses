@@ -1,5 +1,8 @@
 package com.example.incomeandexpenses;
 
+/**
+ * Класс для объектов чека
+ */
 public class Items {
     private int IdItem;
     private int IdOperation;

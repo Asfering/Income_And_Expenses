@@ -14,6 +14,9 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 import java.io.Serializable;
 
+/**
+ * Базовая активити, на её основе строится всё приложение
+ */
 public class Basic extends AppCompatActivity {
 
     private final int ID_INSIGHTS = 1;
@@ -66,7 +69,7 @@ public class Basic extends AppCompatActivity {
 
     void SelectFragment(Fragment newFragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container_view_tag, newFragment).addToBackStack("");
+        ft.replace(R.id.fragment_container_view_tag, newFragment);
         ft.commit();
     }
 
@@ -93,10 +96,6 @@ public class Basic extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 SelectFragment(fragment);
                 break;
-                //FragmentManager fn = new getSupportFragmentManager();
-                //FragmentTransaction ft = fn.beginTransaction();
-                //ft.replace(R.id.fragment_container_view_tag, fragment);
-                //ft.commit();
 
         }
     }

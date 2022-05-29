@@ -9,6 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+/**
+ * Активити для тестирвоание. НА УДАЛЕНИЕ
+ *
+ * НА УДАЛЕНИЕ
+ *
+ * Активити для тестирвоание. НА УДАЛЕНИЕ
+ */
 public class MainActivity extends AppCompatActivity {
 
     EditText txtView;

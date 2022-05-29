@@ -7,7 +7,10 @@ import java.io.IOException;
 
 import okhttp3.*;
 
-
+//TODO: Реализовать сканирование по QR-коду!
+/**
+ * Класс для считывания QR-кода чека. В РАБОТЕ!
+ */
 public class NalogAPIReader {
     // Описать что да как
     private final String Host = "irkkt-mobile.nalog.ru:8888";

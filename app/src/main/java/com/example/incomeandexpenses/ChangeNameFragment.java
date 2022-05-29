@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * Фрагмент для изменения имени
+ */
 public class ChangeNameFragment extends Fragment {
 
     Users user;

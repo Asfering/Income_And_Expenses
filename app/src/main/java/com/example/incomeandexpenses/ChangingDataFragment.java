@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -32,14 +34,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ * Класс изменения данных с формы
+ */
 public class ChangingDataFragment extends Fragment {
 
     ///////////////////////// Регион объявления
 
     // Классы
     Users user;
-    Operations operations;
+    Operations operation;
 
     // Таблица
     TableLayout tableLayout;
@@ -76,7 +80,6 @@ public class ChangingDataFragment extends Fragment {
     ImageButton btnDelete;
 
     ///////////////////////// Конец региона
-
 
 
     ///////////////////////// Регион основной
@@ -164,11 +167,34 @@ public class ChangingDataFragment extends Fragment {
             }
         });
 
+        // Радиобатон "Доход"
+        rbIncome.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(rbIncome.isChecked()){
+                    adapterRadioButton(true);
+                }
+            }
+        });
+
+        // Радиобатон "Расход"
+        rbExpenses.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(rbExpenses.isChecked()){
+                    adapterRadioButton(false);
+                }
+            }
+        });
+
         return RootView;
     }
 
 
     ///////////////////////// Конец региона
+
+
+    // Функция для работы с RadioButton и Spinner adapter
 
 
 
@@ -196,8 +222,8 @@ public class ChangingDataFragment extends Fragment {
 
     // Удаление данных из БД
     private void deleteData(){
-        database.delete("Items", "IdOperations = " + operations.getIdOperation(), null);
-        database.delete("Operations", "IdOperation = " + operations.getIdOperation(), null);
+        database.delete("Items", "IdOperations = " + operation.getIdOperation(), null);
+        database.delete("Operations", "IdOperation = " + operation.getIdOperation(), null);
         Toast.makeText(RootView.getContext(), "Операция успешно удалена", Toast.LENGTH_SHORT).show();
     }
 
@@ -274,7 +300,7 @@ public class ChangingDataFragment extends Fragment {
         contentValues.put("Sum", sum);
         contentValues.put("Category", category);
         // Изменяем запись запись в БД
-        database.update("Operations", contentValues, "IdOperation = ?", new String[] {String.valueOf(operations.getIdOperation())});
+        database.update("Operations", contentValues, "IdOperation = ?", new String[] {String.valueOf(operation.getIdOperation())});
     }
 
     // Режим редактирования, кнопка ИЗМЕНИТЬ
@@ -312,35 +338,29 @@ public class ChangingDataFragment extends Fragment {
 
     // Получаем данные по операции
     private void getData(){
-        Date date = operations.getTimeStamp();
+        Date date = operation.getTimeStamp();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        nameOfOperation.setText(operations.getName());
+        nameOfOperation.setText(operation.getName());
         day.setText(getDay(calendar));
         month.setText(getMonth(calendar));
         year.setText(String.valueOf(calendar.get(Calendar.YEAR)));
-        sum.setText(String.valueOf(operations.getSum()));
+        sum.setText(String.valueOf(operation.getSum()));
         spinner.setEnabled(false);
 
-        ArrayAdapter<?> adapter = null;
-
         // Тип операции
-        if(operations.getTypeOperation()){
+        if(operation.getTypeOperation()){
             rbIncome.setChecked(true);
-            TypeOperation = true;
-            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.IncomesCategory,
-                    android.R.layout.simple_spinner_item);
-        }else{
-            TypeOperation = false;
-            rbExpenses.setChecked(true);
-            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.ExpensesCategory,
-                    android.R.layout.simple_spinner_item);
-        }
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapterRadioButton(true);
 
-        // Вызываем адаптер
-        spinner.setAdapter(adapter);
+        }else{
+            rbExpenses.setChecked(true);
+            adapterRadioButton(false);
+        }
+
+        // показываем текущую категорию операции, значение взято из БД!
+        spinner.setSelection(((ArrayAdapter)spinner.getAdapter()).getPosition(operation.getCategory()));
     }
 
 
@@ -349,7 +369,7 @@ public class ChangingDataFragment extends Fragment {
         // Поиск в БД, ищем ID операции
         Cursor cursor;
         String sqlQuery = "Select * from Items where IdOperations == ? ";
-        cursor = database.rawQuery(sqlQuery, new String[] {String.valueOf(operations.getIdOperation())});
+        cursor = database.rawQuery(sqlQuery, new String[] {String.valueOf(operation.getIdOperation())});
 
         if(cursor != null){
             cursor.moveToFirst();
@@ -391,16 +411,19 @@ public class ChangingDataFragment extends Fragment {
         EditText t1v = new EditText(RootView.getContext());
         t1v.setInputType(InputType.TYPE_CLASS_TEXT);
         t1v.setGravity(Gravity.CENTER);
+        t1v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
         tbrow.addView(t1v);
         // Второй столбец, количество
         EditText t2v = new EditText(RootView.getContext());
         t2v.setGravity(Gravity.CENTER);
         t2v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t2v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         tbrow.addView(t2v);
         // Третий столбец, сумма
         EditText t3v = new EditText(RootView.getContext());
         t3v.setGravity(Gravity.CENTER);
         t3v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t3v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         tbrow.addView(t3v);
         // Добавляем строку в таблицу
         tableLayout.addView(tbrow);
@@ -416,6 +439,7 @@ public class ChangingDataFragment extends Fragment {
         EditText t1v = new EditText(RootView.getContext());
         t1v.setInputType(InputType.TYPE_CLASS_TEXT);
         t1v.setGravity(Gravity.CENTER);
+        t1v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
         t1v.setEnabled(false);
         t1v.setText(String.valueOf(item.getName()));
         tbrow.addView(t1v);
@@ -424,6 +448,7 @@ public class ChangingDataFragment extends Fragment {
         t2v.setGravity(Gravity.CENTER);
         t2v.setEnabled(false);
         t2v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t2v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         t2v.setText(String.valueOf(item.getQuantity()));
         tbrow.addView(t2v);
         // Третий столбец, сумма
@@ -431,6 +456,7 @@ public class ChangingDataFragment extends Fragment {
         t3v.setGravity(Gravity.CENTER);
         t3v.setEnabled(false);
         t3v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t3v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         t3v.setText(String.valueOf(item.getSum()));
         tbrow.addView(t3v);
         // Добавляем строку в таблицу
@@ -467,7 +493,7 @@ public class ChangingDataFragment extends Fragment {
 
     // Получаем выбранную операцию.
     private void getOperation(){
-        operations = (Operations) getArguments().getSerializable(Operations.class.getSimpleName());
+        operation = (Operations) getArguments().getSerializable(Operations.class.getSimpleName());
     }
 
     // Получаем юзера
@@ -505,7 +531,7 @@ public class ChangingDataFragment extends Fragment {
             if (name.getText().toString().equals(""))
                 throw new Exception();
 
-            contentValues.put("IdOperations", operations.getIdOperation());
+            contentValues.put("IdOperations", operation.getIdOperation());
             contentValues.put("Name", name.getText().toString());
             contentValues.put("Quantity", Float.parseFloat(count.getText().toString()));
             contentValues.put("Sum", Float.parseFloat(sum.getText().toString()));
@@ -528,6 +554,22 @@ public class ChangingDataFragment extends Fragment {
         } else {
             tableNotExist();
         }
+    }
+
+    // Функия для вызова спиннера в зависимости от радиобаттон
+    private void adapterRadioButton(boolean bool){
+        ArrayAdapter<?> adapter = null;
+        TypeOperation=bool;
+        if(TypeOperation){
+            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.IncomesCategory,
+                    android.R.layout.simple_spinner_item);
+        }else{
+            adapter = ArrayAdapter.createFromResource(RootView.getContext(), R.array.ExpensesCategory,
+                    android.R.layout.simple_spinner_item);
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Вызываем адаптер
+        spinner.setAdapter(adapter);
     }
 
     // Получаем месяц
@@ -555,6 +597,8 @@ public class ChangingDataFragment extends Fragment {
         return tempReturn;
     }
 
+
+    //TODO: сделать проверку даты, чтобы дата чека не была позже текущей. ТО ЖЕ самое при добавлении вручную.
 
     // Проверяем дату, проверка данных, которые ввёл пользователь.
     private boolean checkDate(EditText day, EditText month, EditText year){

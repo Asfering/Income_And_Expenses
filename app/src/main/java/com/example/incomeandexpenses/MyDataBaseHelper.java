@@ -8,6 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+/**
+ * Класс для работы с БД
+ */
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "IaE";

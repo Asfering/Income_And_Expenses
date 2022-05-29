@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
+/**
+ * Класс для работы с авторизацией пользователя
+ */
 public class Login extends AppCompatActivity {
 
     Button btnLog;

@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Класс регистрации
+ */
 public class Registration extends AppCompatActivity {
 
     Button btnReg;

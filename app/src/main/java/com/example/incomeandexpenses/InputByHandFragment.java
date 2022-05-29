@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
@@ -33,7 +34,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.sql.Date;
 
-
+/**
+ * Класс для внесения данных руками
+ */
 public class InputByHandFragment extends Fragment {
 
     // Классы
@@ -237,16 +240,19 @@ public class InputByHandFragment extends Fragment {
         EditText t1v = new EditText(RootView.getContext());
         t1v.setInputType(InputType.TYPE_CLASS_TEXT);
         t1v.setGravity(Gravity.CENTER);
+        t1v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
         tbrow.addView(t1v);
         // Второй столбец, количество
         EditText t2v = new EditText(RootView.getContext());
         t2v.setGravity(Gravity.CENTER);
         t2v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t2v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         tbrow.addView(t2v);
         // Третий столбец, сумма
         EditText t3v = new EditText(RootView.getContext());
         t3v.setGravity(Gravity.CENTER);
         t3v.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        t3v.setFilters(new InputFilter[] {new InputFilter.LengthFilter(8)});
         tbrow.addView(t3v);
         // Добавляем строку в таблицу
         tableLayout.addView(tbrow);

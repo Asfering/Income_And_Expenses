@@ -1,5 +1,9 @@
 package com.example.incomeandexpenses;
 
+
+/** Вспомогательный класс для работы с NalogApiReader
+ *
+ */
 public class PhoneJson {
     private String phone;
     private String client_secret;

@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Класс для операций (доход/расход)
+ */
 public class Operations implements Serializable{
     private int IdOperation;
     private int IdUser;

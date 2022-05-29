@@ -16,6 +16,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * Адаптер для операция, создан для RecyclerView
+ */
 public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
@@ -42,28 +46,6 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         return new ViewHolder(view);
     }
 
-    private String getMonth(Calendar calendar){
-        String tempReturn = "";
-        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.MONTH)));
-        if(month < 9){
-            month++;
-            tempReturn="0" + String.valueOf(month);
-        } else if (month < 12) {
-            month++;
-            tempReturn=String.valueOf(month);
-        }
-        return tempReturn;
-    }
-
-    private String getDay(Calendar calendar){
-        String tempReturn = "";
-        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-        if(month < 10) {
-        tempReturn="0" + month;
-        }
-        else tempReturn = String.valueOf(month);
-        return tempReturn;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -76,18 +58,16 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
 
         String tempTime = getDay(calendar) + "."+ getMonth(calendar) +"." +calendar.get(Calendar.YEAR);
 
-        //String tempTime = operation.getTimeStamp().get(Calendar.DAY_OF_MONTH) + "." + GetMonth(position) + "." +  operation.getTimeStamp().get(Calendar.YEAR);
-
         holder.timestampOperation.setText(tempTime);
         if (operation.getTypeOperation()){
             holder.separator.setBackgroundColor(Color.parseColor("#008000"));
             holder.sumOperation.setTextColor(Color.parseColor("#008000"));
-            holder.sumOperation.setText("+ " + operation.getSum());
+            holder.sumOperation.setText("+ " + operation.getSum() + " ₽");
         }
         else if (!operation.getTypeOperation()) {
             holder.separator.setBackgroundColor(Color.parseColor("#ff0000"));
             holder.sumOperation.setTextColor(Color.parseColor("#ff0000"));
-            holder.sumOperation.setText("- " + operation.getSum());
+            holder.sumOperation.setText("- " + operation.getSum() + " ₽");
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
@@ -120,5 +100,34 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
 
 
         }
+    }
+
+    /*
+    Регион вспомогательный
+     */
+
+    // Месяц
+    private String getMonth(Calendar calendar){
+        String tempReturn = "";
+        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.MONTH)));
+        if(month < 9){
+            month++;
+            tempReturn="0" + String.valueOf(month);
+        } else if (month < 12) {
+            month++;
+            tempReturn=String.valueOf(month);
+        }
+        return tempReturn;
+    }
+
+    // День
+    private String getDay(Calendar calendar){
+        String tempReturn = "";
+        int month = Integer.parseInt (String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        if(month < 10) {
+            tempReturn="0" + month;
+        }
+        else tempReturn = String.valueOf(month);
+        return tempReturn;
     }
 }

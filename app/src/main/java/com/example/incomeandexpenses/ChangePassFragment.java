@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+/**
+ * Фрагмент для изменения пароля
+ */
 public class ChangePassFragment extends Fragment {
 
     Users user;

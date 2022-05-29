@@ -13,6 +13,9 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
+/**
+ * Сканнер QR-кодов
+ */
 public class QRCodeScanner extends AppCompatActivity {
     private CodeScanner codeScanner;
     private TextView tv;

@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Фрагмент для изменения номера телефона
+ */
 public class ChangePhoneFragment extends Fragment {
 
     Users user;

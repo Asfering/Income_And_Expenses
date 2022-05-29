@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+
+/**
+ * Класс пользователь
+ */
 public class Users implements Serializable {
     private int IdUser;
     private String PhoneNumber;

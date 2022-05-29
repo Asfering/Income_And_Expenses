@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+/**
+ * Фрагмент настроек
+ */
 public class SettingsFragment extends Fragment {
 
     TextView txtView;
@@ -18,7 +22,6 @@ public class SettingsFragment extends Fragment {
     Button btnChangePassword;
     Button btnChangePhoneNumber;
     Button btnChangeName;
-    Button btnExit;
 
 
     @Override
@@ -32,7 +35,6 @@ public class SettingsFragment extends Fragment {
         btnChangePassword = (Button) RootView.findViewById(R.id.changePassword);
         btnChangePhoneNumber = (Button) RootView.findViewById(R.id.changePhoneNumber);
         btnChangeName = (Button) RootView.findViewById(R.id.changeName);
-        btnExit = (Button) RootView.findViewById(R.id.btnExit);
 
         txtView = (TextView) RootView.findViewById(R.id.helloProfile);
 
@@ -61,13 +63,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ChangeNameRedirect();
-            }
-        });
-
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Exit();
             }
         });
 

@@ -53,24 +53,6 @@
                 android:layout_marginTop="300dp"
                 android:text="Сменить номер телефона" />
 
-            <Button
-                android:id="@+id/btnCallDevelopers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="550dp"
-                android:text="Связь с разработчиком" />
-
-            <Button
-                android:id="@+id/btnExit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="600dp"
-                android:text="Выйти" />
-
 
 
 </FrameLayout>

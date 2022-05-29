@@ -14,6 +14,9 @@ import android.widget.EditText;
 import java.util.Date;
 
 
+/**
+ * Фрагмент для добавления руками или QR-код!
+ */
 public class AddFragment extends Fragment {
 
     Users user;

@@ -1,5 +1,9 @@
 package com.example.incomeandexpenses;
 
+
+/** Вспомогательный класс для работы с NalogApiReader
+ *
+ */
 public class TicketID {
     private String qr;
 
