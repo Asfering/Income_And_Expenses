@@ -45,10 +45,6 @@ public class Registration extends AppCompatActivity {
                 }else{
                     DataInCorrect();
                 }
-                //Log.d("TAG", "---Table Users---");
-                //cursor = database.query("users", null, null, null, null, null, null);
-                //logCursor(cursor);
-                //cursor.close();
             }
         });
     }

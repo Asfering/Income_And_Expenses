@@ -96,7 +96,9 @@ public class InsightsFragment extends Fragment {
 
         // TODO: Тут баг. При возвращении с нового афрагмента месяц автоматом грузится текущий, а не тот, который был введен ранее!
         // Получаем текущую дату
+
         Calendar calendar = Calendar.getInstance();
+
         editMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
         editYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
 

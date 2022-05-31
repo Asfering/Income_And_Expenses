@@ -69,11 +69,6 @@ public class SettingsFragment extends Fragment {
         return RootView;
     }
 
-    private void Exit(){
-        user = null;
-        Intent intent = new Intent(getActivity(), Login.class);
-        startActivity(intent);
-    }
 
     // Новый фрагмент на смену имени
     private void ChangeNameRedirect(){

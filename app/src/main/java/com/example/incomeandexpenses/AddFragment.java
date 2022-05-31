@@ -62,6 +62,7 @@ public class AddFragment extends Fragment {
 
     private void RedirectToScanQRCode(){
         Intent intent = new Intent(getActivity(), QRCodeScanner.class);
+        intent.putExtra(Users.class.getSimpleName(), user);
         startActivity(intent);
     }
 

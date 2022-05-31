@@ -3,6 +3,7 @@ package com.example.incomeandexpenses;
 import static android.text.InputType.TYPE_CLASS_TEXT;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -318,6 +319,7 @@ public class InputByHandFragment extends Fragment {
                 }
             }
             allFine();
+            redirectToBasic();
         } else {
             dateInCorrect();
         }
@@ -341,6 +343,13 @@ public class InputByHandFragment extends Fragment {
     // Получаем пользователя
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
+    }
+
+    // Переход на главную
+    private void redirectToBasic(){
+        Intent intent = new Intent(getContext(), Basic.class);
+        intent.putExtra(Users.class.getSimpleName(), user);
+        startActivity(intent);
     }
 
     // Метод для получения месяца из Calendar.

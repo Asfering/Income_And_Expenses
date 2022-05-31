@@ -79,7 +79,12 @@ public class MainActivity extends AppCompatActivity {
         nalogAPIReader.smsCode(txtView.getText().toString(), new NalogAPIReader.CallBack() {
             @Override
             public void onSmsSend(String sessionId) {
-                nalogAPIReader.getTicket("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1", sessionId);
+                nalogAPIReader.getTicketID("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1", sessionId, new NalogAPIReader.Ticket() {
+                    @Override
+                    public void getTicket(String sessionId, String ticketId) {
+                        //nalogAPIReader.getTicket("t=20220426T1859&s=344.11&fn=9280440301393520&i=111896&fp=190653864&n=1", sessionId, ticketId);
+                    }
+                });
             }
         });
     }
