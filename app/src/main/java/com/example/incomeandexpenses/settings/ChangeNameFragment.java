@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.settings;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,34 +14,48 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
+
 
 /**
  * Фрагмент для изменения имени
  */
 public class ChangeNameFragment extends Fragment {
 
+    // Класс
     Users user;
+
+
+    /////////////////////////////////////// Регион основной
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.fragment_change_name, container, false);
 
+        // получаем пользователя
         GetUser();
 
+        // Элементы формы
         Button btnSave = (Button) RootView.findViewById(R.id.btnChangeName);
         TextView name = RootView.findViewById(R.id.changeNameToNew);
         TextView password = RootView.findViewById(R.id.usePasswordInChangingName);
 
+        // База данных
         MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(RootView.getContext());
         SQLiteDatabase database = myDataBaseHelper.getWritableDatabase();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Формы ввода
                 String newName = name.getText().toString();
                 String pass = password.getText().toString();
 
+                // Работа с БД
                 ContentValues contentValues = new ContentValues();
                 Cursor cursor;
                 String sqlQuery = "Select * from users where PhoneNumber == ? and Password == ?";
@@ -63,6 +77,13 @@ public class ChangeNameFragment extends Fragment {
         return RootView;
     }
 
+
+    /////////////////////////////////////// Конец региона
+
+
+    /////////////////////////////////////// Регион вспомогательный
+
+
     private void NameChanged(View RootView){
         Toast.makeText(RootView.getContext(),"Имя успешно изменено", Toast.LENGTH_SHORT).show();
     }
@@ -74,4 +95,7 @@ public class ChangeNameFragment extends Fragment {
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
     }
+
+
+    /////////////////////////////////////// Конец региона
 }

@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.settings;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,29 +14,39 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
+
 
 /**
  * Фрагмент для изменения пароля
  */
 public class ChangePassFragment extends Fragment {
 
+    // Класс
     Users user;
+
+
+    /////////////////////////////////////// Регион основной
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Получаем пользователя
         GetUser();
 
         View RootView = inflater.inflate(R.layout.fragment_change_pass, container, false);
 
+        // Элементы формы
         Button btnSave = (Button) RootView.findViewById(R.id.btnChangePassword);
         TextView passwordOld = RootView.findViewById(R.id.changePasswordOld);
         TextView passwordNew = RootView.findViewById(R.id.changePasswordNew);
 
+        // База данных
         MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(RootView.getContext());
         SQLiteDatabase database = myDataBaseHelper.getWritableDatabase();
-        //MakeText(RootView);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,13 @@ public class ChangePassFragment extends Fragment {
         return RootView;
     }
 
+
+    /////////////////////////////////////// Конец региона
+
+
+    /////////////////////////////////////// Регион вспомогательный
+
+
     private void PasswordChanged(View RootView){
         Toast.makeText(RootView.getContext(),"Пароль успешно изменён", Toast.LENGTH_SHORT).show();
     }
@@ -79,4 +96,7 @@ public class ChangePassFragment extends Fragment {
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
     }
+
+
+    /////////////////////////////////////// Конец региона
 }

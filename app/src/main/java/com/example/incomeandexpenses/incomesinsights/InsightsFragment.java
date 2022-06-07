@@ -1,8 +1,7 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.incomesinsights;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Path;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,17 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.security.Timestamp;
-import org.threeten.bp.LocalDateTime;
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.categories.CategoriesFragment;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Стартовая страница, доходы и расходы тут
@@ -40,8 +39,8 @@ public class InsightsFragment extends Fragment {
     private ArrayList<Operations> operationsFiltering = new ArrayList<>();
 
     // Переменные
-    private int insightsSum;    // расходы, сумма общая
-    private int incomesSum;     // доходы, сумма общая
+    private float insightsSum;    // расходы, сумма общая
+    private float incomesSum;     // доходы, сумма общая
 
     // Данные, пришедшие с прошлого фрагмента
     Users user;
@@ -49,6 +48,10 @@ public class InsightsFragment extends Fragment {
     // База данных
     MyDataBaseHelper myDataBaseHelper;
     SQLiteDatabase database;
+
+    // Дата
+    String year;
+    String month;
 
     // Дата для фильтра
     EditText editMonth;
@@ -94,13 +97,23 @@ public class InsightsFragment extends Fragment {
         Button insBtn = RootView.findViewById(R.id.insightsBtn);
         Button incBtn = RootView.findViewById(R.id.incomesBtn);
 
-        // TODO: Тут баг. При возвращении с нового афрагмента месяц автоматом грузится текущий, а не тот, который был введен ранее!
         // Получаем текущую дату
 
         Calendar calendar = Calendar.getInstance();
 
-        editMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
-        editYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
+        if(month == null && year == null){
+            editMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+            editYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
+        } else if(month == null){
+            editMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+        } else if(year == null){
+            editYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
+        }
+        else{
+            editMonth.setText(month);
+            editYear.setText(year);
+        }
+
 
         RecView = RootView.findViewById(R.id.recView);
         // Загружаем данные из БД
@@ -144,15 +157,14 @@ public class InsightsFragment extends Fragment {
     //////////////////////////////////////// Конец региона
 
 
-
     //////////////////////////////////////// Регион работы с данными
 
 
     // Фильтруем данные по месяцам и годам
     private void getDataByFilters(){
         String strDate;
-        String strMonth;
-        String strYear;
+        String strMonth = null;
+        String strYear = null;
         operationsFiltering.clear();
         for(int id = 0; id<operations.size(); id++){
             strDate = String.valueOf(operations.get(id).getTimeStamp());
@@ -162,9 +174,13 @@ public class InsightsFragment extends Fragment {
             if(Integer.parseInt(String.valueOf(editYear.getText())) == Integer.parseInt(strYear)){
                 if(Integer.parseInt(String.valueOf(editMonth.getText())) == Integer.parseInt(strMonth)){
                     operationsFiltering.add(operations.get(id));
+                    month=strMonth;
+                    year= strYear;
                 }
             }
         }
+
+
 
         OperationsAdapter.OnOperationClickListener operationClickListener = new OperationsAdapter.OnOperationClickListener() {
             @Override
@@ -228,14 +244,14 @@ public class InsightsFragment extends Fragment {
     }
 
     // Переходим в расходы/доходы по категориям
-    private void RedirectToCategories(boolean type, int allCost, String month, String year){
+    private void RedirectToCategories(boolean type, float allCost, String Month, String Year){
         Bundle bundle = new Bundle();
         bundle.putSerializable(Users.class.getSimpleName(), user);      // Для передачи юзера во фрагмент
         bundle.putSerializable(Operations.class.getSimpleName(), operationsFiltering);
         bundle.putBoolean("typeOperation", type);
-        bundle.putInt("allCost", allCost);
-        bundle.putString("month", month);
-        bundle.putString("year", year);
+        bundle.putFloat("allCost", allCost);
+        bundle.putString("month", Month);
+        bundle.putString("year", Year);
         Fragment nextFrag= new CategoriesFragment();
         nextFrag.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -279,8 +295,8 @@ public class InsightsFragment extends Fragment {
 
     // Функция подсчёта всех расходов и доходов в месяце
     private void sumAllData(){
-        insightsSum = 0;
-        incomesSum = 0;
+        insightsSum = 0.0F;
+        incomesSum = 0.0F;
 
         // Считаем!
         for(int id = 0; id<operationsFiltering.size(); id++){
@@ -300,7 +316,7 @@ public class InsightsFragment extends Fragment {
         }
 
         // Доходы
-        if(insightsSum == 0){
+        if(incomesSum == 0){
             incomesTextView.setText("0 ₽");
         }else{
             incomesTextView.setText(String.valueOf(incomesSum) + " ₽");

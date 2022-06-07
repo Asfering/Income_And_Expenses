@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -13,14 +13,21 @@ import androidx.annotation.Nullable;
  */
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "IaE";
-    public static final int DATABASE_VERSION = 1;
+    // Переменные
+    public static final String DATABASE_NAME = "IaE";           // Имя бд
+    public static final int DATABASE_VERSION = 1;               // Версия бд
 
 
+    ////////////////////////////////////////// Регион основной
+
+
+    // Конструктор
     public MyDataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+    // Создание БД
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
@@ -55,31 +62,41 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createItemTable);
     }
 
+
+    // Апргрейд БД
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
 
-    /*public void dropReceipts(SQLiteDatabase sqLiteDatabase){
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS operations");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Items");
-        onCreate(sqLiteDatabase);
-    }*/
+
+    ////////////////////////////////////////// Конец региона
+
+
+    ////////////////////////////////////////// Регион вспомогательный
+
 
     // Вывод значений
-    void logCursor(Cursor cursor) {
+    public void logCursor(Cursor cursor) {
+        // Если курсор не пустой
         if (cursor != null) {
+            // Береём 1 элемент
             if (cursor.moveToFirst()) {
                 String str;
                 do {
                     str = "";
+                    // Идём по столбцам в курсоре
                     for (String cn : cursor.getColumnNames()) {
+                        // Записываем в строчку
                         str = str.concat(cn + " = " + cursor.getString(cursor.getColumnIndexOrThrow(cn)) + "; ");
                     }
+                    // Выводим
                     Log.d("TAG", str);
                 } while (cursor.moveToNext());
             } else Log.d("TAG", "Cursor incorrect");
         }
-
     }
+
+
+    ////////////////////////////////////////// Конец региона
 }

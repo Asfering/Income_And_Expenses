@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.categories;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,29 +10,44 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.incomeandexpenses.R;
+
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс для RecyclerView с категориями
+ */
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
+    // Переменные
     private LayoutInflater inflater;
-    private List<Categories> categories;
     Date date;
+
+    // Списки
+    private List<Categories> categories;
 
     // Интерфейс для получения нажатого элемента
     interface OnCategoryClickListener {
         void onCategoryClick(Categories categories, int position);
     }
 
-    private final CategoriesAdapter.OnCategoryClickListener onClickListener;
+    // Обработчик нажатия
+    private final OnCategoryClickListener onClickListener;
 
+
+    ///////////////////////////////////////////////// Регион основной
+
+
+    // Конструктор
     CategoriesAdapter(Context context, List<Categories> categories, CategoriesAdapter.OnCategoryClickListener onOperationClickListener) {
         this.onClickListener = onOperationClickListener;
         this.categories = categories;
         this.inflater = LayoutInflater.from(context);
     }
 
+    // Передача вьюхи
     @NonNull
     @Override
     public CategoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,14 +55,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         return new CategoriesAdapter.ViewHolder(view);
     }
 
+    // Заполнение вьюхи
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Categories category = categories.get(holder.getAdapterPosition());
-        holder.nameCategory.setText(String.valueOf(category.getName()));
-        holder.sumCategory.setText(category.getSum() + " ₽");
+        Categories category = categories.get(holder.getAdapterPosition());          // Категория
+        holder.nameCategory.setText(String.valueOf(category.getName()));            // Имя
+        holder.sumCategory.setText(category.getSum() + " ₽");                       // Сумма
+
+        // Проценты
         String percentage = new DecimalFormat("#0.00").format(category.getPercentage());
         holder.percentage.setText(percentage + " %");
 
+        // Цвет
         switchColors(holder);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +78,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         });
     }
 
+    // Количество элементов в RecyclerView
     @Override
     public int getItemCount() {
         return categories.size();
@@ -79,13 +99,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         }
     }
 
-    // Вспомогательный войд для смены цвета категории
-    private void changingColors(ViewHolder holder, String color){
-        holder.separator.setBackgroundColor(Color.parseColor(color));
-        holder.sumCategory.setTextColor(Color.parseColor(color));
-    }
 
-    // Цвета категорий
+    ///////////////////////////////////////////////// Конец региона
+
+
+    ///////////////////////////////////////////////// Регион вспомогательный
+
+
+    // Цвета категорий (можно потом заменить на strings)
     private void switchColors(ViewHolder holder) {
         switch (holder.nameCategory.getText().toString()) {
             case "Продукты":
@@ -182,4 +203,13 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                 break;
         }
     }
+
+    // Вспомогательный войд для смены цвета категории
+    private void changingColors(ViewHolder holder, String color){
+        holder.separator.setBackgroundColor(Color.parseColor(color));
+        holder.sumCategory.setTextColor(Color.parseColor(color));
+    }
+
+
+    ///////////////////////////////////////////////// Конец региона
 }

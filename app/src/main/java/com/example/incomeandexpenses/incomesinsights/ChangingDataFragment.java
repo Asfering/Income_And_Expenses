@@ -1,11 +1,10 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.incomesinsights;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,7 +27,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Type;
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Items;
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.classes;
 
 import com.google.gson.annotations.SerializedName;
 

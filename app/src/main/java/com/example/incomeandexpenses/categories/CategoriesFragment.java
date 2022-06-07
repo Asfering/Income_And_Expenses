@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.categories;
 
 import static java.util.Collections.swap;
 
@@ -13,14 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.incomesinsights.OperationsByCategoryFragment;
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * Класс для просмотра категорий поступлений и списаний
+ */
 public class CategoriesFragment extends Fragment {
 
 
@@ -33,7 +37,7 @@ public class CategoriesFragment extends Fragment {
     // Данные, пришедшие с фрагмента
     Users user;
     boolean typeOperation;
-    int allCost;
+    float allCost;
     List<Operations> operations;
     String month;
     String year;
@@ -217,7 +221,7 @@ public class CategoriesFragment extends Fragment {
 
     // Получаем общую сумму
     private void getAllCost(){
-        allCost = (int) getArguments().getInt("allCost");
+        allCost = (float) getArguments().getFloat("allCost");
     }
 
     // Получаем дату, по которой сортировали

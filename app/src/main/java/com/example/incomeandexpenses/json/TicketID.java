@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.json;
 
 
 /** Вспомогательный класс для работы с NalogApiReader

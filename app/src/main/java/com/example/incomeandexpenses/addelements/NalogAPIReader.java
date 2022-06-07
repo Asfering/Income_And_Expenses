@@ -1,10 +1,14 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.addelements;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.textclassifier.ConversationAction;
 
+import com.example.incomeandexpenses.json.PhoneJson;
+import com.example.incomeandexpenses.json.SmsJson;
+import com.example.incomeandexpenses.json.TicketID;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -14,32 +18,32 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.*;
 
-//TODO: Реализовать сканирование по QR-коду!
 /**
- * Класс для считывания QR-кода чека. В РАБОТЕ!
+ * Класс для считывания QR-кода чека.
  */
 public class NalogAPIReader implements Serializable {
-    // Описать что да как
-    private final String Host = "irkkt-mobile.nalog.ru:8888";
-    private final String DeviceOs = "iOS";
-    private final String ClientVersion = "2.9.0";
-    private final String DeviceId = "7C82010F-16CC-446B-8F66-FC4080C66521";
-    private final String Accept = "*/*";
-    private final String UserAgent = "billchecker/2.9.0 (iPhone; iOS 13.6; Scale/2.00)";
-    private final String AcceptLanguage = "ru-RU;q=1, en-US;q=0.9";
-    private final String ClientSecret = "IyvrAbKt9h/8p6a7QPh8gpkXYQ4=";
-    private final String Os = "Android";
+
+    // Учитываем, что доступ к АПИ взял в интернете, лично у меня доступа нет
+    private final String Host = "irkkt-mobile.nalog.ru:8888";               // Ссылка на API
+    private final String DeviceOs = "iOS";                                  // Для Headers
+    private final String ClientVersion = "2.9.0";                           // Версия клиента
+    private final String DeviceId = "7C82010F-16CC-446B-8F66-FC4080C66521"; // ID девайса, у которого есть доступ к API
+    private final String Accept = "*/*";                                    // Принимаем всё
+    private final String UserAgent = "billchecker/2.9.0 (iPhone; iOS 13.6; Scale/2.00)";    // Пользовательский агент, для Headers
+    private final String AcceptLanguage = "ru-RU;q=1, en-US;q=0.9";                         // Языки
+    private final String ClientSecret = "IyvrAbKt9h/8p6a7QPh8gpkXYQ4=";                     // Секретный ключ
+    private final String Os = "Android";                                                    // ОС
+
+    // Переменный, созданные для работы с АПИ
     private String SessionId = null;
     private String PhoneNumber = null;
     private String TicketId = null;
 
+    // OkHttpClient
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.MINUTES) // connect timeout
             .writeTimeout(5, TimeUnit.MINUTES) // write timeout

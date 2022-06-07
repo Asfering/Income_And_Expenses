@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.incomesinsights;
 
 import android.os.Bundle;
 
@@ -11,10 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.incomesinsights.ChangingDataFragment;
+import com.example.incomeandexpenses.incomesinsights.OperationsAdapter;
 
 import java.util.List;
 
+/**
+ * Просмотр операций по выбранной категории.
+ */
 public class OperationsByCategoryFragment extends Fragment {
 
 

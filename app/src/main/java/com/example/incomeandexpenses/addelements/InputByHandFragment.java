@@ -1,6 +1,4 @@
-package com.example.incomeandexpenses;
-
-import static android.text.InputType.TYPE_CLASS_TEXT;
+package com.example.incomeandexpenses.addelements;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -29,8 +25,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Type;
-import java.sql.Time;
+import com.example.incomeandexpenses.Basic;
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.sql.Date;
@@ -198,7 +198,6 @@ public class InputByHandFragment extends Fragment {
             // Создаем новый элемент класса Operations
             operations = new Operations(cursor.getInt(cursor.getColumnIndexOrThrow("IdOperation")), user.getIdUser(), name, TypeOperation, timestamp, sum, category);
         }
-        myDataBaseHelper.logCursor(cursor);
         cursor.close();
     }
 

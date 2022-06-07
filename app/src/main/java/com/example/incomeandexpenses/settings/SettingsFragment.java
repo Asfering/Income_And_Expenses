@@ -1,6 +1,5 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.settings;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,17 +10,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+
 
 /**
  * Фрагмент настроек
  */
 public class SettingsFragment extends Fragment {
 
+    // Элементы формы
     TextView txtView;
-    Users user;
     Button btnChangePassword;
     Button btnChangePhoneNumber;
     Button btnChangeName;
+
+    // Класс
+    Users user;
+
+
+    /////////////////////////////////////// Регион основной
 
 
     @Override
@@ -36,15 +44,12 @@ public class SettingsFragment extends Fragment {
         btnChangePhoneNumber = (Button) RootView.findViewById(R.id.changePhoneNumber);
         btnChangeName = (Button) RootView.findViewById(R.id.changeName);
 
+        // Приветствие
         txtView = (TextView) RootView.findViewById(R.id.helloProfile);
-
-        //
-        // тут не работает смена имени при изменении "Сменить имя". Обновляется только при перезапуске приложения. ПОДУМАТЬ как исправить!
-        //
         txtView.setText("Здравствуйте, " + user.getName());
 
         // Обрабатываем кнопки
-
+        // Сменить пароль
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +57,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Сменить телефон
         btnChangePhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +65,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Сменить имя
         btnChangeName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +75,12 @@ public class SettingsFragment extends Fragment {
 
         return RootView;
     }
+
+
+    /////////////////////////////////////// Конец региона
+
+
+    /////////////////////////////////////// Регион переходов
 
 
     // Новый фрагмент на смену имени
@@ -107,8 +120,16 @@ public class SettingsFragment extends Fragment {
     }
 
 
+    /////////////////////////////////////// Конец региона
+
+
+    /////////////////////////////////////// Регион вспомогательный
+
+
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
     }
 
+
+    /////////////////////////////////////// Конец региона
 }

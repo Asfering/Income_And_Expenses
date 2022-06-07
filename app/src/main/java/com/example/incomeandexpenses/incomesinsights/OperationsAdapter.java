@@ -1,16 +1,17 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.incomesinsights;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.incomeandexpenses.classes.Operations;
+import com.example.incomeandexpenses.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,23 +23,33 @@ import java.util.List;
  */
 public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.ViewHolder> {
 
+    // Переменные
     private LayoutInflater inflater;
-    private List<Operations> operations;
     Date date;
+
+    // Список
+    private List<Operations> operations;
 
     // Интерфейс для получения нажатого элемента
     interface OnOperationClickListener{
         void onOperationClick(Operations operation, int position);
     }
 
+    // Обработчик нажатия
     private final OnOperationClickListener onClickListener;
 
+
+    ///////////////////////////////////////////////// Регион основной
+
+
+    // Конструктор
     OperationsAdapter(Context context, List<Operations> operations, OnOperationClickListener onOperationClickListener){
         this.onClickListener = onOperationClickListener;
         this.operations = operations;
         this.inflater = LayoutInflater.from(context);
     }
 
+    // Создание вьюхи
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,25 +57,27 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         return new ViewHolder(view);
     }
 
-
+    // Заполнение вьюхи
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Operations operation = operations.get(holder.getAdapterPosition());
         holder.nameOperation.setText(String.valueOf(operation.getName()));
         holder.categoryOperation.setText(operation.getCategory());
+
+        // Работа со временем
         date = operation.getTimeStamp();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
         String tempTime = getDay(calendar) + "."+ getMonth(calendar) +"." +calendar.get(Calendar.YEAR);
-
         holder.timestampOperation.setText(tempTime);
+
+        // Если доход
         if (operation.getTypeOperation()){
             holder.separator.setBackgroundColor(Color.parseColor("#008000"));
             holder.sumOperation.setTextColor(Color.parseColor("#008000"));
             holder.sumOperation.setText("+ " + operation.getSum() + " ₽");
         }
-        else if (!operation.getTypeOperation()) {
+        else if (!operation.getTypeOperation()) {   // Если расход
             holder.separator.setBackgroundColor(Color.parseColor("#ff0000"));
             holder.sumOperation.setTextColor(Color.parseColor("#ff0000"));
             holder.sumOperation.setText("- " + operation.getSum() + " ₽");
@@ -81,11 +94,13 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
 
     }
 
+    // Количество элементов
     @Override
     public int getItemCount() {
         return operations.size();
     }
 
+    // Вьюха
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nameOperation, categoryOperation, sumOperation, timestampOperation;
         View separator;
@@ -102,9 +117,12 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         }
     }
 
-    /*
-    Регион вспомогательный
-     */
+
+    ///////////////////////////////////////////////// Конец региона
+
+
+    ///////////////////////////////////////////////// Регион вспомогательный
+
 
     // Месяц
     private String getMonth(Calendar calendar){
@@ -130,4 +148,7 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Vi
         else tempReturn = String.valueOf(month);
         return tempReturn;
     }
+
+
+    ///////////////////////////////////////////////// Конец региона
 }

@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.settings;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,12 +14,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.incomeandexpenses.R;
+import com.example.incomeandexpenses.classes.Users;
+import com.example.incomeandexpenses.database.MyDataBaseHelper;
+
 /**
  * Фрагмент для изменения номера телефона
  */
 public class ChangePhoneFragment extends Fragment {
 
+    // Класс
     Users user;
+
+
+    /////////////////////////////////////// Регион основной
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,13 +36,16 @@ public class ChangePhoneFragment extends Fragment {
 
         View RootView = inflater.inflate(R.layout.fragment_change_phone, container, false);
 
+        // Получаем юзера
         GetUser();
 
+        // Элементы формы
         Button btnSave = (Button) RootView.findViewById(R.id.btnChangePhone);
         TextView phoneOld = RootView.findViewById(R.id.changePhoneOld);
         TextView phoneNew = RootView.findViewById(R.id.changePhoneNew);
         TextView pass = RootView.findViewById(R.id.writePasswordOnChangePhone);
 
+        // База данных
         MyDataBaseHelper myDataBaseHelper = new MyDataBaseHelper(RootView.getContext());
         SQLiteDatabase database = myDataBaseHelper.getWritableDatabase();
 
@@ -56,10 +68,8 @@ public class ChangePhoneFragment extends Fragment {
         return RootView;
     }
 
-    void PhoneNumberIncorrect(View RootView){
-        Toast.makeText(RootView.getContext(),"Номер телефона не совпадает с номером данного пользователя", Toast.LENGTH_SHORT).show();
-    }
 
+    // Смена номера телефона
     void ChangePhoneNumber(String phOld, String password, SQLiteDatabase database, String phNew, View RootView){
         ContentValues contentValues = new ContentValues();
         Cursor cursor;
@@ -81,6 +91,17 @@ public class ChangePhoneFragment extends Fragment {
         cursor.close();
     }
 
+
+    /////////////////////////////////////// Конец региона
+
+
+    /////////////////////////////////////// Регион вспомогательный
+
+
+    void PhoneNumberIncorrect(View RootView){
+        Toast.makeText(RootView.getContext(),"Номер телефона не совпадает с номером данного пользователя", Toast.LENGTH_SHORT).show();
+    }
+
     private void PhoneChanged(View RootView){
         Toast.makeText(RootView.getContext(),"Номер телефона успешно изменён", Toast.LENGTH_SHORT).show();
     }
@@ -92,4 +113,7 @@ public class ChangePhoneFragment extends Fragment {
     private void GetUser(){
         user = (Users) getArguments().getSerializable(Users.class.getSimpleName());
     }
+
+
+    /////////////////////////////////////// Конец региона
 }

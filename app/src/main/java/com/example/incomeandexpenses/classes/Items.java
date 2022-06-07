@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.classes;
 
 /**
  * Класс для объектов чека

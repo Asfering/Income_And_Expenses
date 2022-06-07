@@ -1,4 +1,4 @@
-package com.example.incomeandexpenses;
+package com.example.incomeandexpenses.categories;
 
 /**
  * Класс для RecyclerView категорий в расходах / доходах
