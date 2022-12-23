@@ -3,6 +3,7 @@ package com.example.incomeandexpenses.incomesinsights;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.incomeandexpenses.Basic;
 import com.example.incomeandexpenses.R;
 import com.example.incomeandexpenses.classes.Items;
 import com.example.incomeandexpenses.classes.Operations;
@@ -242,6 +244,8 @@ public class ChangingDataFragment extends Fragment {
     private void saveData(){
         if (checkDate(day, month, year))        // Проверяем дату
         {
+            try{
+
             String time = year.getText().toString() + "-" + month.getText().toString() + "-" + day.getText().toString();        // Передаем дату в стринг
             java.sql.Date date = java.sql.Date.valueOf(time);     // Передаем стринг в дату
             String category = spinner.getSelectedItem().toString();         // выделяем категорию
@@ -267,6 +271,11 @@ public class ChangingDataFragment extends Fragment {
                 }
             }
             allFine();
+            redirectToBasic();
+            }
+        catch (Exception e){
+            Toast.makeText(RootView.getContext(), "Ошибка при изменении!", Toast.LENGTH_SHORT).show();
+        }
         } else {
             dateInCorrect();
         }
@@ -301,7 +310,7 @@ public class ChangingDataFragment extends Fragment {
         contentValues.put("Name", name);
         contentValues.put("TypeOperation", TypeOperation);
         contentValues.put("TimeStamp", dateFormat.format(timestamp));
-        contentValues.put("Sum", sum);
+        contentValues.put("Sum", sumFinalData());
         contentValues.put("Category", category);
         // Изменяем запись запись в БД
         database.update("Operations", contentValues, "IdOperation = ?", new String[] {String.valueOf(operation.getIdOperation())});
@@ -495,6 +504,21 @@ public class ChangingDataFragment extends Fragment {
 
     ///////////////////////// Регион вспомогательный
 
+
+    private float sumFinalData(){
+        if (counterRows > 1) {
+            finalSum = 0;
+            for (int i = 1; i < counterRows; i++) {
+                TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
+                EditText editText = (EditText) tbRow.getChildAt(2);         // Берем сумму каждого товара
+                finalSum += Float.parseFloat(editText.getText().toString());     // Складываем в общую.
+            }
+            return finalSum;
+        }
+        return Float.parseFloat(sum.getText().toString());
+    }
+
+
     // Получаем выбранную операцию.
     private void getOperation(){
         operation = (Operations) getArguments().getSerializable(Operations.class.getSimpleName());
@@ -645,5 +669,12 @@ public class ChangingDataFragment extends Fragment {
             dateInCorrect();
         }
         return false;
+    }
+
+    // Переход на главную
+    private void redirectToBasic(){
+        Intent intent = new Intent(RootView.getContext(), Basic.class);
+        intent.putExtra(Users.class.getSimpleName(), user);
+        startActivity(intent);
     }
 }

@@ -4,18 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1453125" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_insights_24.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/drawable/ic_launcher_background.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_basic.xml" value="0.264" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_basic.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_change_password.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_checkingactivity.xml" value="0.215625" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_input_sms_code.xml" value="0.264" />
-        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_login.xml" value="0.536" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_qrcode_scanner.xml" value="0.4" />
-        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_registration.xml" value="0.4" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_registration.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/activity_tempestactivity.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_add.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_add_info.xml" value="0.2" />
@@ -25,7 +26,7 @@
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_change_phone.xml" value="0.536" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_changing_data.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_input_by_hand.xml" value="0.264" />
-        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_insights.xml" value="0.264" />
+        <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_insights.xml" value="0.2" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_operations_by_category.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/roma_/AndroidStudioProjects/IncomeAndExpenses/app/src/main/res/layout/fragment_qr_code_scanner.xml" value="0.25833333333333336" />

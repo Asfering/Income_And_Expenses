@@ -172,7 +172,7 @@ public class InputByHandFragment extends Fragment {
     ///////////////////////// Регион работы с БД
 
     // Инсертим данные в таблицу Operations
-    private void addOperationsToDB(String name, boolean TypeOperation, Date timestamp, float sum, String category){
+    private void addOperationsToDB(String name, boolean TypeOperation, Date timestamp, String sum, String category){
         // Объявления
         ContentValues contentValues = new ContentValues();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -182,7 +182,7 @@ public class InputByHandFragment extends Fragment {
         contentValues.put("Name", name);
         contentValues.put("TypeOperation", TypeOperation);
         contentValues.put("TimeStamp", dateFormat.format(timestamp));
-        contentValues.put("Sum", sum);
+        contentValues.put("Sum", sumFinalData());
         contentValues.put("Category", category);
         // Добавляем запись в БД
         database.insert("Operations", null, contentValues);
@@ -196,7 +196,7 @@ public class InputByHandFragment extends Fragment {
         cursor.moveToLast();
         if (cursor.getCount() != 0) {
             // Создаем новый элемент класса Operations
-            operations = new Operations(cursor.getInt(cursor.getColumnIndexOrThrow("IdOperation")), user.getIdUser(), name, TypeOperation, timestamp, sum, category);
+            operations = new Operations(cursor.getInt(cursor.getColumnIndexOrThrow("IdOperation")), user.getIdUser(), name, TypeOperation, timestamp, sumFinalData(), category);
         }
         cursor.close();
     }
@@ -307,7 +307,7 @@ public class InputByHandFragment extends Fragment {
             Date date = Date.valueOf(time);     // Передаем стринг в дату
             String category = spinner.getSelectedItem().toString();         // выделяем категорию
             // Добавляем операцию в БД
-            addOperationsToDB(nameOfOperation.getText().toString(), TypeOperation, date, Float.parseFloat(sum.getText().toString()), category);
+            addOperationsToDB(nameOfOperation.getText().toString(), TypeOperation, date, sum.getText().toString() , category);
             // Если таблица заполнена хотя бы 1 строкой
             if (counterRows > 1) {
                 for (int i = 1; i < counterRows; i++) {
@@ -322,6 +322,20 @@ public class InputByHandFragment extends Fragment {
         } else {
             dateInCorrect();
         }
+    }
+
+
+    private float sumFinalData(){
+        if (counterRows > 1) {
+            finalSum = 0;
+            for (int i = 1; i < counterRows; i++) {
+                TableRow tbRow = (TableRow) tableLayout.getChildAt(i);
+                EditText editText = (EditText) tbRow.getChildAt(2);         // Берем сумму каждого товара
+                finalSum += Float.parseFloat(editText.getText().toString());     // Складываем в общую.
+            }
+            return finalSum;
+        }
+        return Float.parseFloat(sum.getText().toString());
     }
 
     // Суммируем суммы элементов таблицы
@@ -406,6 +420,7 @@ public class InputByHandFragment extends Fragment {
         }
         return false;
     }
+
 
     // Тосты.
     void dateInCorrect(){

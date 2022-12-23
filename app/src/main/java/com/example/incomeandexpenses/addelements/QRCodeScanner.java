@@ -110,7 +110,6 @@ public class QRCodeScanner extends AppCompatActivity {
 
     // Переход на главную
     private void redirectToBasic(){
-        Toast.makeText(this, "Элемент успешно добавлен!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Basic.class);
         intent.putExtra(Users.class.getSimpleName(), user);
         startActivity(intent);

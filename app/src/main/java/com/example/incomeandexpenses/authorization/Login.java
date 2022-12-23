@@ -83,6 +83,7 @@ public class Login extends AppCompatActivity {
                                 cursor.getString(cursor.getColumnIndexOrThrow("PhoneNumber")),
                                 cursor.getString(cursor.getColumnIndexOrThrow("Password")),
                                 cursor.getString(cursor.getColumnIndexOrThrow("Name")));
+
                         GotoBasic(user);
                     } else {
                         DataInCorrect();

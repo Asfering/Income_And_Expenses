@@ -14,6 +14,7 @@ import com.example.incomeandexpenses.classes.Users;
 import com.example.incomeandexpenses.incomesinsights.InsightsFragment;
 import com.example.incomeandexpenses.settings.SettingsFragment;
 
+
 /**
  * Базовая активити, на её основе строится всё приложение
  */
@@ -45,10 +46,11 @@ public class Basic extends AppCompatActivity {
             bottomNavigation.add(new MeowBottomNavigation.Model(ID_ADD, R.drawable.ic_baseline_add_circle_24));
             bottomNavigation.add(new MeowBottomNavigation.Model(ID_SETTINGS, R.drawable.ic_baseline_settings_24));
 
+
             bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
                 @Override
                 public void onClickItem(MeowBottomNavigation.Model item) {
-                    //MakeText(item);
+                    //SelectItem(item);
                 }
             });
 
@@ -63,6 +65,7 @@ public class Basic extends AppCompatActivity {
                }
            });
 
+
            // Нажатие
             bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
                 @Override
@@ -70,6 +73,8 @@ public class Basic extends AppCompatActivity {
                     SelectItem(item);
                 }
             });
+
+
 
             bottomNavigation.show(ID_INSIGHTS, false);
         }catch (Exception e){
